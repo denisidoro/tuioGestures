@@ -21,7 +21,7 @@ server.init({
 // ------------------------------------
 // Callbacks
 
-var callbacks = require('./callbacks.js')
+var callbacks = require('./src/callbacks.js')
 for (var i in callbacks) {
 	client.on(i, callbacks[i]);
 }
