@@ -3,7 +3,7 @@ var interpret = require("./interpret");
 var callbacks = {
 
 	addTuioCursor: function(cursor) {
-		interpret.commandLine('%enz% "a=SayTime(Microsoft Zira Desktop)"');
+		interpret.move("D_U_D_U");
 		callbacks.updateTuioCursor(cursor);
 	},
 
