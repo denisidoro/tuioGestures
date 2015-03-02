@@ -1,4 +1,5 @@
-var express = require("express");
+// ------------------------------------
+// Tuio client
 
 global.Tuio = require("./Tuio/Tuio.js");
 var sub = ["Time", "Point", "Container", "Cursor", "Object", "Client"];
@@ -8,20 +9,19 @@ sub.forEach(function(s) {
 
 global.client = new Tuio.Client();
 
-client.on("updateTuioCursor", onUpdateTuioCursor);
+// ------------------------------------
+// Tuio server
 
-function onUpdateTuioCursor(updateCursor) {
-	console.log([updateCursor.getCursorId(), updateCursor.getScreenX(10000)/10000, updateCursor.getScreenY(10000)/10000]);
-}
-
-server = require("./Tuio/TuioServer"),
-
-app = express.createServer();
-app.use(express["static"](__dirname + "/../"));
-app.listen(5000);
-
+server = require("./Tuio/TuioServer");
 server.init({
 	oscPort: 3333,
-	oscHost: "127.0.0.1",
-	socketPort: app
+	oscHost: "127.0.0.1"
 });
+
+// ------------------------------------
+// Callbacks
+
+var callbacks = require('./callbacks.js')
+for (var i in callbacks) {
+	client.on(i, callbacks[i]);
+}

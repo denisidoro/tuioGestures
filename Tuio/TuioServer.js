@@ -1,7 +1,6 @@
 module.exports = (function() {
     var dgram = require("dgram"),
     udpSocket = null,
-    socketio = require("socket.io"),
     io = null,
     oscParser = require("./OscParser"),
 
@@ -10,25 +9,9 @@ module.exports = (function() {
         udpSocket.on("listening", onSocketListening);
         udpSocket.bind(params.oscPort, params.oscHost);
 
-        /*io = socketio.listen(params.socketPort);
-        io.enable("browser client minification");
-        io.enable("browser client etag");
-        io.enable("browser client gzip");
-        io.set("log level", 1);
-        io.set("transports", [
-            "websocket",
-            "flashsocket",
-            "htmlfile",
-            "xhr-polling",
-            "jsonp-polling"
-        ]);
-        io.sockets.on("connection", onSocketConnection);*/
-
 
         udpSocket.on("message", function(msg) {
-            //console.log(oscParser.decode(msg));
             client.acceptBundle(oscParser.decode(msg));
-            //socket.emit("osc", oscParser.decode(msg));
         });
 
     },

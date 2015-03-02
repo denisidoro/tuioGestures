@@ -1,0 +1,23 @@
+<actions>
+    <action>
+        <m>L_U_R_D</m>
+        <c>1</c>
+        <s>0</s>
+        <a>1</a>
+        <p>a=SearchWebsite(g)</p>
+    </action>
+    <action>
+        <m>D_U_D_U</m>
+        <c>1</c>
+        <s>0</s>
+        <a>1</a>
+        <p>b</p>
+    </action>
+    <action>
+        <m>U</m>
+        <c>4</c>
+        <s>0</s>
+        <a>1</a>
+        <p>a=SendKey(LWin)</p>
+    </action>
+</actions>
