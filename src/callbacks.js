@@ -5,7 +5,7 @@ var cursors = [];
 var callbacks = {
 
 	addTuioCursor: function(cursor) {
-		console.log('add');
+		//console.log('add');
 		cursors[cursor.getCursorId()] = {
 			id: cursor.getCursorId(),
 			x: cursor.getScreenX(10000)/10000,
@@ -27,6 +27,7 @@ var callbacks = {
 	removeTuioCursor: function(cursor) {
 		cursors.splice(cursor.getCursorId(), 1);
 		delete[cursor.getCursorId()];
+		mt.onRemoveTuioCursor();
 	},
 
 	addTuioObject: function(object) {},

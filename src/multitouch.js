@@ -7,7 +7,6 @@ var Recognizer = require('./recognizer');
 var Interpreter = require("./interpreter");
 
 // variables
-var moveString = "";
 var mean = new (require('./mean'))();
 var iteration = 0;
 var lastTime; // ms
@@ -20,6 +19,16 @@ var multitouch = {
   distance: {},
   regressionAngle: 0,
 
+  reset: function(cursors) {
+
+    // reset global variables    
+    mean.reset(center, (!cursors ? 0 : cursors.length));
+    iteration = 0;
+    lastTime = Date.now(); 
+    speed = null;
+
+  },
+
   onAddTuioCursor: function(cursors) {
 
     var p = Vector.fromCursors(cursors);
@@ -27,12 +36,15 @@ var multitouch = {
     direction = p[0].subtract(p);
     distance = Vector.distance(p);
     regressionAngle = 0;
+    this.reset(cursors);
+    Interpreter.reset();
 
-    // reset global variables    
-    mean.reset(center, cursors.length);
-    iteration = 0;
-    lastTime = Date.now(); 
-    speed = null;
+  },
+
+  onRemoveTuioCursor: function() {
+
+    this.reset();
+    Interpreter.reset();
 
   },
 
@@ -90,11 +102,10 @@ var multitouch = {
 
     //console.log(mean.rotationAngle);
 
-    var segment = Recognizer.recognize(speed, mean)
+    var segment = Recognizer.recognize(speed, mean, cursors.length)
     if (segment) {
-        console.log(segment);
-        moveString += (moveString == "") ? "" : "_" + segment;
-        //Interpreter.move(mean);
+        if (Interpreter.newMovement(segment))
+            this.reset();
     }
 
   }
