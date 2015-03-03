@@ -1,47 +1,50 @@
+var Recognizer = require('./recognizer');
+
 var shortcuts = require('../data/shortcuts.json');
-var actions = require("../data/actions.json");
+var actions = require("../data/actions.json");	// m: movement, a: area, n: length, c: command
 var moveString = "";
 
 var Interpreter = {
-
-	// moveString: function() {
-	// 	actions.forEach(function(a) {
-	// 		if (a.m.trim() == mean.string) {
-	// 			Interpreter.commandLine(a.a);
-	// 			return false;
-	// 		}
-	// 	});
-	// },
 	
-	newMovement: function(segment) {
+	newMovement: function(segment, length, startingCursor) {
 		
-		var changed = false;
+		var detection = 0;
 		var newString = moveString + (moveString == "" ? "" : "_") + segment;
 
 		actions.forEach(function(a) {
-			console.log("\t" + newString + ", \t" + a.m);
-			if (a.m.indexOf(newString) == 0) {
+			//console.log("\t" + newString + ",\t" + a.m + ",\t(" + [a.n == length, a.m.indexOf(newString) == 0, Recognizer.area(startingCursor, a.a), moveString].join(", ") + ")");
+			if (a.n == length && a.m.indexOf(newString) == 0 && Recognizer.area(startingCursor, a.a)) {
+				//console.log("MATCH: " + a.m);
 				moveString = newString;
-				changed = true;
+				detection++;
 				return false;
 			}
 		})
 
-		console.log([segment, newString, moveString]);
-		Interpreter.totalMovement();
-
-		return changed;
+		//console.log(moveString);
+		//console.log([segment, newString, moveString]);
+		if (detection)
+			detection += Interpreter.totalMovement() ? 1 : 0;
+		
+		return detection;
 
 	},
 
 	totalMovement: function() {
 
+		var found = false;
+
 		actions.forEach(function(a) {
-			if (a.m.trim() == moveString) {
-				Interpreter.commandLine(a.a);
+			if (a.m == moveString) {
+				//console.log(a.m);
+				console.log(a.m + "\t" + (a.d ? a.d : a.c));
+				Interpreter.commandLine(a.c);
+				found = true;
 				return false;
 			}
 		})
+
+		return found;
 
 	},
 
@@ -52,9 +55,9 @@ var Interpreter = {
 	},
 
 	exec: function(command) {
-		console.log(command);
+		//console.log(command);
 		var exec = require('child_process').exec;
-		//exec(command);
+		exec(command);
 	},
 
 	reset: function() {

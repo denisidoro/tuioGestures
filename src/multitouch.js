@@ -11,6 +11,8 @@ var mean = new (require('./mean'))();
 var iteration = 0;
 var lastTime; // ms
 var speed; // screen % / s
+var startingCursor;
+var monitor = true;
 
 var multitouch = {
 
@@ -26,6 +28,14 @@ var multitouch = {
     iteration = 0;
     lastTime = Date.now(); 
     speed = null;
+    regressionAngle = 0;
+
+  },
+
+  stopMonitoring: function(msg) {
+
+    monitor = false;
+    console.log(msg || "MONITORING STOPPED");
 
   },
 
@@ -35,23 +45,31 @@ var multitouch = {
     center = Vector.findCenter(p);
     direction = p[0].subtract(p);
     distance = Vector.distance(p);
-    regressionAngle = 0;
+
     this.reset(cursors);
     Interpreter.reset();
 
+    if (cursors.length == 1) {
+        startingCursor = cursors[0];
+        monitor = true;
+    }
+
   },
 
-  onRemoveTuioCursor: function() {
+  onRemoveTuioCursor: function(length) {
 
     this.reset();
     Interpreter.reset();
+
+    if (length == 0)
+        startingCursor = null;
 
   },
 
   onUpdateTuioCursor: function(cursors) {
 
     iteration++;
-    if (iteration < 11)// && !regressionAngle)
+    if (iteration < 11 || !monitor)// && !regressionAngle)
         return false;
     iteration = 0;
     
@@ -102,10 +120,21 @@ var multitouch = {
 
     //console.log(mean.rotationAngle);
 
-    var segment = Recognizer.recognize(speed, mean, cursors.length)
-    if (segment) {
-        if (Interpreter.newMovement(segment))
+    var move = Recognizer.recognize(speed, mean, cursors.length)
+
+    if (move) {
+
+        var detection = Interpreter.newMovement(move[1], cursors.length, startingCursor)
+        
+        if (detection > 0) {
             this.reset();
+            if (detection > 1)
+                this.stopMonitoring("MOVEMENT FOUND");
+        }
+
+        else if (move[0] == "swipe")
+            this.stopMonitoring("NO MOVEMENT");
+
     }
 
   }

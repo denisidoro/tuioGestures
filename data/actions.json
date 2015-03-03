@@ -1,14 +1,27 @@
 [	
 	{
         "m": "L_U_R_D",
-        "s": 0,
-        "n": 1, 
-        "a": "%ahk% \"a=SendKey({LWin})\""
+        "a": "",
+        "n": 2, 
+        "c": "%ahk% \"a=SendKey({LWin})\""
     },    
     {
         "m": "D_U_D_U",
-        "s": 0,
+        "a": "",
         "n": 1,
-        "a": "%ahk% \"a=SendKey({RWin})\""
+        "c": "%ahk% \"a=SendKey({RWin})\""
+    },
+    {
+        "m": "PI",
+        "a": "",
+        "n": 4,
+        "c": "%enz% \"a=SendKey({LWin})\"",
+        "d": "Go to start screen"
+    },
+    {
+        "m": "PO",
+        "a": "",
+        "n": 4,
+        "c": "go fullscreen"
     }
 ]
