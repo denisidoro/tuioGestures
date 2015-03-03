@@ -1,9 +1,0 @@
-<settings>
-    <multitouchTolerance>15</multitouchTolerance>
-    <minimalIterationCount>12</minimalIterationCount>
-    <minimalIterationFactor>110</minimalIterationFactor>
-    <minimalDistance>16</minimalDistance>
-    <diagonalArc>22</diagonalArc>
-    <autohotkeyLocation>C:\Program Files\AutoHotkey\AutoHotkey.exe</autohotkeyLocation>
-    <enzymeLocation>C:\Portable\Utilities\Enzyme\Enzyme.ahk</enzymeLocation>
-</settings>

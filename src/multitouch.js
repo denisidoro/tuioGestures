@@ -83,22 +83,9 @@ var multitouch = {
     var newDistance = Vector.distance(p);
 
     if (cursors.length > 1) {
-
         var scaleFactor = Math.pow(newDistance / distance, 0.5*cursors.length + 0);
         var newRegressionAngle = Vector.regressionAngle(p);
-        //console.log([newRegressionAngle.toPrecision(3), regressionAngle.toPrecision(3), mean.rotationAngle.toPrecision(3)])
         var rotationAngle = (newRegressionAngle - regressionAngle) * (2.1*cursors.length - 3.2);
-
-        /*// Finally, calculate the vector with endpoints at the fingers, and find the angle it has
-        // been rotated by.
-        var newDirection = p[0].subtract(p);
-        var crossProduct = Vector.crossProduct(direction, newDirection);
-
-        // We use the fact that cp(a, b) = ||a|| * ||b|| * sin(theta), where theta is the angle between
-        // vectors a and b, to find theta.
-        var normalizedCrossProduct = crossProduct / (direction.norm() * newDirection.norm());
-        var rotationAngle = Math.asin(normalizedCrossProduct);*/
-
     }
 
     var angle = Math.atan2(deltaVector.y, deltaVector.x) * 180/3.1415;
@@ -113,28 +100,20 @@ var multitouch = {
         speed = deltaVector.norm() / (now - lastTime) * 1000;
 
     center = newCenter;
-    //direction = newDirection;
     distance = newDistance;
     regressionAngle = newRegressionAngle;
     lastTime = now;
 
-    //console.log(mean.rotationAngle);
-
     var move = Recognizer.recognize(speed, mean, cursors.length)
-
     if (move) {
-
         var detection = Interpreter.newMovement(move[1], cursors.length, startingCursor)
-        
         if (detection > 0) {
             this.reset();
             if (detection > 1)
                 this.stopMonitoring("MOVEMENT FOUND");
         }
-
         else if (move[0] == "swipe")
             this.stopMonitoring("NO MOVEMENT");
-
     }
 
   }

@@ -1,5 +1,7 @@
+// libraries
 var mt = require("./multitouch");
 
+// variables
 var cursors = [];
 
 var callbacks = {
@@ -35,7 +37,7 @@ var callbacks = {
 		delete[cursor.getCursorId()];
 
 		mt.onRemoveTuioCursor(cursors.length);
-		
+
 	},
 
 	addTuioObject: function(object) {},

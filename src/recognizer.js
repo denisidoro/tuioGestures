@@ -21,8 +21,6 @@ var Recognizer = {
 
   recognize: function(speed, mean, fingers) {
 
-    //console.log([speed.toPrecision(3), mean.rotationAngle.toPrecision(3), mean.scaleFactor.toPrecision(3), mean.angle]);
-
     if (speed < 0.14 || (mean.rotationAngle == 0.0 || mean.ScaleFactor == 0.0 && fingers > 1))
       return false;
 
@@ -90,11 +88,5 @@ var Recognizer = {
   }
 
 }
-
-// Test
-// var a = [6, 8, 45];
-// a.forEach(function(e) {
-//   console.log(Recognizer.direction(e));
-// })
 
 module.exports = Recognizer;
