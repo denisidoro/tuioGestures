@@ -15,9 +15,9 @@ function cloneActions() {
 	return r;
 }
 
-function printPossibleActions() {
+function printPossibleActions(a) {
 	var str = [];
-	possibleActions.forEach(function(p) {
+	a.forEach(function(p) {
 		str.push(p.m + "+" + p.n);
 	});
 	console.log("\n" + str.join(", ") + "\n");
@@ -45,7 +45,7 @@ var Interpreter = {
 				delete possibleActions[i]; //possibleActions = possibleActions.splice(i, 1);
 		})
 
-		printPossibleActions();
+		printPossibleActions(possibleActions);
 
 		if (detection)
 			detection += Interpreter.totalMovement() ? 1 : 0;
@@ -90,5 +90,7 @@ var Interpreter = {
 	}
 
 };
+
+printPossibleActions(actions);
 
 module.exports = Interpreter;

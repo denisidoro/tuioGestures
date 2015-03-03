@@ -1,27 +1,32 @@
-[	
-	{
-        "m": "L_U_R_D",
-        "a": "",
-        "n": 2, 
-        "c": "%ahk% \"a=SendKey({LWin})\""
-    },    
-    {
-        "m": "D_U_D_U",
-        "a": "",
-        "n": 1,
-        "c": "%ahk% \"a=SendKey({RWin})\""
-    },
-    {
-        "m": "PI",
-        "a": "",
-        "n": 4,
-        "c": "%enz% \"a=SendKey({LWin})\"",
-        "d": "Go to start screen"
-    },
-    {
-        "m": "PO",
-        "a": "",
-        "n": 4,
-        "c": "go fullscreen"
-    }
+[{
+    "m": "L_U_R_D",
+    "n": 2, 
+    "c": "%ahk% \"a=SendKey({LWin})\""
+}, {
+    "m": "D_U_D_U",
+    "n": 1,
+    "c": "%ahk% \"a=SendKey({RWin})\""
+}, {
+    "m": "PI",
+    "n": 4,
+    "c": "%enz% \"a=SendKey({LWin})\"",
+    "d": "Go to start screen"
+}, {
+    "m": "PO",
+    "n": 4,
+    "c": "%enz% \"a=SendKey(#d)\"",
+    "d": "Go to desktop"
+}, {
+    "m": "L",
+    "a": "ANY",
+    "n": 5,
+    "c": "%enz% \"a=SendKey(^#{Left})\"" ,
+    "d": "Go to left desktop"
+}, {
+    "m": "R",
+    "a": "ANY",
+    "n": 5,
+    "c": "%enz% \"a=SendKey(^#{Right})\"",
+    "d": "Go to right desktop"
+}
 ]
