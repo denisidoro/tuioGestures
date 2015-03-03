@@ -69,7 +69,7 @@ var multitouch = {
   onUpdateTuioCursor: function(cursors) {
 
     iteration++;
-    if (iteration < 11 || !monitor)// && !regressionAngle)
+    if (iteration < 11 || !monitor)
         return false;
     iteration = 0;
     
@@ -113,7 +113,7 @@ var multitouch = {
                 this.stopMonitoring("MOVEMENT FOUND");
         }
         else if (move[0] == "swipe")
-            this.stopMonitoring("NO MOVEMENT");
+            this.stopMonitoring("NO POSSIBLE MOVEMENTS");
     }
 
   }

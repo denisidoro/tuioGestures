@@ -3,8 +3,25 @@ var Recognizer = require('./recognizer');
 
 // variables
 var shortcuts = require('../data/shortcuts.json');
-var actions; // m: movement, a: area, n: length, c: command
+var actions = require("../data/actions.json");; // m: movement, a: area, n: length, c: command
+var possibleActions;
 var moveString = "";
+
+// helpers
+function cloneActions() {
+	var r = [];
+	for (var i = 0; i < actions.length; i++)
+		r.push(actions[i]);
+	return r;
+}
+
+function printPossibleActions() {
+	var str = [];
+	possibleActions.forEach(function(p) {
+		str.push(p.m + "+" + p.n);
+	});
+	console.log("\n" + str.join(", ") + "\n");
+}
 
 var Interpreter = {
 	
@@ -13,15 +30,22 @@ var Interpreter = {
 		var detection = 0;
 		var newString = moveString + (moveString == "" ? "" : "_") + segment;
 
-		actions.forEach(function(a, i) {
+		// print
+		process.stdout.write("\u001b[2J\u001b[0;0H");
+		console.log(newString + "+" + length);
+
+		possibleActions.forEach(function(a, i) {
+			//console.log([i, a.m]);
 			if (a.n == length && a.m.indexOf(newString) == 0 && Recognizer.area(startingCursor, a.a)) {
 				moveString = newString;
 				detection++;
 				return false;
 			}
 			else
-				actions.slice(i, 1);
+				delete possibleActions[i]; //possibleActions = possibleActions.splice(i, 1);
 		})
+
+		printPossibleActions();
 
 		if (detection)
 			detection += Interpreter.totalMovement() ? 1 : 0;
@@ -34,9 +58,9 @@ var Interpreter = {
 
 		var found = false;
 
-		actions.forEach(function(a) {
+		possibleActions.forEach(function(a) {
 			if (a.m == moveString) {
-				console.log(a.m + "\t" + (a.d ? a.d : a.c));
+				console.log("\n" + (a.d ? a.d : a.c));
 				Interpreter.commandLine(a.c);
 				found = true;
 				return false;
@@ -58,9 +82,11 @@ var Interpreter = {
 		exec(command);
 	},
 
-	reset: function() {
+	reset: function(reloadActions) {
+
 		moveString = "";
-		actions = require("../data/actions.json");
+		possibleActions = cloneActions();
+
 	}
 
 };
