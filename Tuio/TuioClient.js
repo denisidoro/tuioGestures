@@ -31,7 +31,7 @@ Tuio.Client = Tuio.Model.extend({
         this.freeCursorList = [];
         this.maxCursorId = -1;
         this.currentFrame = 0;
-        this.currentTime = null;
+        this.currentTime = new Tuio.Time(); //null;
         _.bindAll(this, "onConnect", "acceptBundle", "onDisconnect");
     },
 

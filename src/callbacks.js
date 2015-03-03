@@ -1,17 +1,31 @@
-var interpret = require("./interpret");
+var mt = require("./multitouch");
+
+var cursors = [];
 
 var callbacks = {
 
 	addTuioCursor: function(cursor) {
-		interpret.move("D_U_D_U");
+		console.log('add');
+		cursors[cursor.getCursorId()] = {
+			id: cursor.getCursorId(),
+			x: cursor.getScreenX(10000)/10000,
+			y: cursor.getScreenY(10000)/10000
+		};
+		mt.onAddTuioCursor(cursors);
 		callbacks.updateTuioCursor(cursor);
 	},
 
 	updateTuioCursor: function(cursor) {
-		console.log([cursor.getCursorId(), cursor.getScreenX(10000)/10000, cursor.getScreenY(10000)/10000]);
+		var c = cursors[cursor.getCursorId()];
+		if (!c) return false;
+		c.x = cursor.getScreenX(10000)/10000;
+		c.y = cursor.getScreenY(10000)/10000;
+		//console.log(c);
+		mt.onUpdateTuioCursor(cursors);
 	},
 
 	removeTuioCursor: function(cursor) {
+		cursors.splice(cursor.getCursorId(), 1);
 		delete[cursor.getCursorId()];
 	},
 

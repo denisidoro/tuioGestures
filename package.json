@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^0.18.0",
     "jspack": "0.0.4",
-    "lodash": "^3.3.1"
+    "lodash": "^3.3.1",
+    "nodeQuery": "0.0.9-1"
   }
 }

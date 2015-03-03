@@ -1,16 +1,16 @@
 var shortcuts = require('../data/shortcuts.json');
 var actions = require("../data/actions.json");
 
-var interpret = {
+var Interpreter = {
 
-	move: function(current) {
-		actions.forEach(function(a) {
-			if (a.m.trim() == current) {
-				interpret.commandLine(a.a);
-				return false;
-			}
-		});
-	},
+	// moveString: function() {
+	// 	actions.forEach(function(a) {
+	// 		if (a.m.trim() == mean.string) {
+	// 			Interpreter.commandLine(a.a);
+	// 			return false;
+	// 		}
+	// 	});
+	// },
 
 	commandLine: function(text) {
 		for (var s in shortcuts)
@@ -26,4 +26,4 @@ var interpret = {
 
 };
 
-module.exports = interpret;
+module.exports = Interpreter;

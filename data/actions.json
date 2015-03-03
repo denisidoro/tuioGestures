@@ -2,11 +2,13 @@
 	{
         "m": "L_U_R_D",
         "s": 0,
+        "n": 1, 
         "a": "%ahk% \"a=SendKey({LWin})\""
     },    
     {
         "m": "D_U_D_U",
         "s": 0,
+        "n": 1,
         "a": "%ahk% \"a=SendKey({RWin})\""
     }
 ]
