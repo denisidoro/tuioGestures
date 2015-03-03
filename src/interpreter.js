@@ -3,7 +3,7 @@ var Recognizer = require('./recognizer');
 
 // variables
 var shortcuts = require('../data/shortcuts.json');
-var actions = require("../data/actions.json");	// m: movement, a: area, n: length, c: command
+var actions; // m: movement, a: area, n: length, c: command
 var moveString = "";
 
 var Interpreter = {
@@ -13,12 +13,14 @@ var Interpreter = {
 		var detection = 0;
 		var newString = moveString + (moveString == "" ? "" : "_") + segment;
 
-		actions.forEach(function(a) {
+		actions.forEach(function(a, i) {
 			if (a.n == length && a.m.indexOf(newString) == 0 && Recognizer.area(startingCursor, a.a)) {
 				moveString = newString;
 				detection++;
 				return false;
 			}
+			else
+				actions.slice(i, 1);
 		})
 
 		if (detection)
@@ -58,6 +60,7 @@ var Interpreter = {
 
 	reset: function() {
 		moveString = "";
+		actions = require("../data/actions.json");
 	}
 
 };
