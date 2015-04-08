@@ -57,7 +57,9 @@ var Recognizer = {
 
   },
 
-  area: function(cursor, area) {
+  area: function(cursor, area, e) {
+
+    e = e | 0.1;
 
     function isInsideRectangle(point, topLeft, bottomRight) {
       return (point.x >= topLeft[0] && point.x <= bottomRight[0] && point.y >= topLeft[1] && point.y <= bottomRight[1]); 
@@ -71,7 +73,11 @@ var Recognizer = {
        "L":   [ [0, 0],   [.5, 1]   ],
        "BL":  [ [0, 0],   [.5, .5]  ],
        "B":   [ [0, .5],  [1, 1]    ],
-       "BR":  [ [.5, .5], [1, 1]    ]
+       "BR":  [ [.5, .5], [1, 1]    ],
+       "LE":  [ [0, 0],   [e, 1]    ],
+       "RE":  [ [1-e, 0], [1, 1]    ],
+       "BE":  [ [0, 1-e], [1, 1]    ],
+       "TE":  [ [0, 0],   [1, e]    ],
     };
 
     if (!area || area == "ANY")
